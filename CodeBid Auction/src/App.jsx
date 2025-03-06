@@ -1,17 +1,21 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Signup from "./Pages/Signup";
-import Auction from "./Pages/Auction"; // Create a simple main page component
+  import React from "react";
+  import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+  import { useAuthState } from "react-firebase-hooks/auth";
+  import { auth } from "./Pages/firebaseconfig";
+  import Auth from "./Pages/Auth";
+  import Auction from "./Pages/Auction"; 
 
-const App = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Signup />} />
-        <Route path="/mainpage" element={<Auction />} />
-      </Routes>
-    </Router>
-  );
-};
+  const App = () => {
+    const [user] = useAuthState(auth);
 
-export default App;
+    return (
+      <Router>
+        <Routes>
+          <Route path="/" element={ user ? <Navigate to="/Auction" /> : <Auth/> } />
+          <Route path="/Auction" element={<Auction />} />
+        </Routes>
+      </Router>
+    );
+  };
+
+  export default App;
