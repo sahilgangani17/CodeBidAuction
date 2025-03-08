@@ -1,9 +1,9 @@
   import React from "react";
   import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
   import { useAuthState } from "react-firebase-hooks/auth";
-  import { auth } from "./Pages/firebaseconfig";
-  import Auth from "./Pages/Auth";
-  import Auction from "./Pages/Auction"; 
+  import { auth } from "./Widgets/firebaseconfig";
+  import Auth from "./Widgets/Auth";
+  import Auction from "./Widgets/Auction"; 
 
   const App = () => {
     const [user] = useAuthState(auth);
