@@ -33,7 +33,7 @@ const Auction = () => {
   }, []);
 
   const handleLogOut = () => {
-    console.log("Logged Out");
+    // console.log("Logged Out");
     localStorage.removeItem("Username");
     localStorage.removeItem("TotalBidPoints");
     localStorage.removeItem("problemsetNo");

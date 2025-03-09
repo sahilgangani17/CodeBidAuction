@@ -56,7 +56,7 @@ const Auth = () => {
       }
 
       const userdata = await getUserdata(username);
-      console.log(userdata);
+      // console.log(userdata);
       localStorage.setItem('Username', username);
       localStorage.setItem('TotalBidPoints', userdata.TotalBidPoints);
       localStorage.setItem('problemsetNo', userdata.problemsetNo);

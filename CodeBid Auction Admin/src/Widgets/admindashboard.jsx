@@ -98,6 +98,9 @@ const AdminDashboard = () => {
     const handleLogOut = () => {
         try {
             localStorage.removeItem("Admin");
+            localStorage.removeItem('PsNo');
+            localStorage.removeItem('Title');
+            localStorage.removeItem('Type');
             navigate("/");
         } catch (error) {
             console.log("Error logging out", error.message);
