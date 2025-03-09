@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "./firebaseconfig";
 import { BidPointsButton } from "./Bid";
+import FetchPsowned from "./ownedps";
 import TimerAndPs from "./fetchcurrentpsandTimer";
 
 const Auction = () => {
@@ -34,14 +35,16 @@ const Auction = () => {
 
   return (
     <>
-      <h1>Welcome to the Auction Page!</h1>
+      {/* <h1>Welcome to the Auction Page!</h1> */}
       <TimerAndPs />
       <h2>Highest Bid: {highestBid}</h2>
       <h2>Name: {BidderName}</h2>
       <button onClick={handleLogOut} className="logout_btn">
         Logout
       </button>
+      
       <BidPointsButton />
+      <FetchPsowned />
     </>
   );
 };
