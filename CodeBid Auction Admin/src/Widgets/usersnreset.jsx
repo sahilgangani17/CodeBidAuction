@@ -46,6 +46,33 @@ const ActiveUsers = () => {
 
         return () => unsubscribeAuction();
     }, []);
+    
+
+    const resetbid = async () => {
+    try {
+        const auctionRef = collection(db, 'LiveAuction');
+        const snapshot = await getDocs(auctionRef);
+
+        const resetPromises = snapshot.docs.map(async (docSnap) => {
+            const username = docSnap.id;
+
+            // Skip the document if it's "HigestBid" (typo? Should it be "HighestBid"?)
+            if (username === "HigestBid") return;
+
+            const userDocRef = doc(db, 'LiveAuction', username);
+
+            await updateDoc(userDocRef, {
+                currentBid: 0,
+            });
+        });
+
+        await Promise.all(resetPromises);
+        console.log("All bids have been reset!");
+    } catch (error) {
+        console.error("Error in resetting bids:", error);
+    }
+};
+
 
     return (
         <>
@@ -61,6 +88,7 @@ const ActiveUsers = () => {
                     ))}
                 </div>
             </div>
+                <button onClick={resetbid}>Reset Bid</button>
         </>
     );
 };

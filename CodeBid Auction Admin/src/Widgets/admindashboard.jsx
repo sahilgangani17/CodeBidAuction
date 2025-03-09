@@ -31,28 +31,55 @@ const AdminDashboard = () => {
     }, []);
 
     // Start bidding function
+    // const startBidding = async () => {
+    //     try {
+    //         const docRef = doc(db, "AdminDetails", "AdminLoginInfo");
+
+    //         await updateDoc(docRef, { canWrite: true, timer: 30 });
+    //         setCanWrite(true);
+    //         setTimer(30);
+
+    //         intervalRef.current = setInterval(() => {
+    //             setTimer(prev => {
+    //                 if (prev <= 1) {
+    //                     clearInterval(intervalRef.current);
+    //                     stopBidding();
+    //                     return 0;
+    //                 }
+    //                 return prev - 1;
+    //             });
+    //         }, 1000);
+    //     } catch (error) {
+    //         console.error("Error starting bidding:", error);
+    //     }
+    // };
     const startBidding = async () => {
         try {
-            const docRef = doc(db, "AdminDetails", "AdminLoginInfo");
-
-            await updateDoc(docRef, { canWrite: true, timer: 30 });
-            setCanWrite(true);
-            setTimer(30);
-
-            intervalRef.current = setInterval(() => {
-                setTimer(prev => {
-                    if (prev <= 1) {
-                        clearInterval(intervalRef.current);
-                        stopBidding();
-                        return 0;
-                    }
-                    return prev - 1;
-                });
-            }, 1000);
+          const docRef = doc(db, "AdminDetails", "AdminLoginInfo");
+      
+          // Set the initial state in Firebase
+          await updateDoc(docRef, { canWrite: true, timer: 30 });
+          setCanWrite(true);
+          setTimer(30);
+      
+          intervalRef.current = setInterval(async () => {
+            setTimer((prev) => {
+              if (prev <= 1) {
+                clearInterval(intervalRef.current);
+                stopBidding();
+                return 0;
+              }
+              const newTimer = prev - 1;
+              // Update Firebase with the new timer value
+              updateDoc(docRef, { timer: newTimer }).catch(console.error);
+              return newTimer;
+            });
+          }, 1000);
         } catch (error) {
-            console.error("Error starting bidding:", error);
+          console.error("Error starting bidding:", error);
         }
-    };
+      };
+      
 
     // Stop bidding function
     const stopBidding = async () => {
