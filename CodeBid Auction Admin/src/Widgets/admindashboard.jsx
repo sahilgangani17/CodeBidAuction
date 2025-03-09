@@ -5,7 +5,7 @@ import { db } from "./firebaseconfig";
 import ActiveUsers from "./usersnreset";
 import FetchPs from "./fetchps";
 import UpdateHighestBid from "./setupHigestBid";
-import "../Styles/AdminDashboard.css";
+import "../Styles/Admindashboard.css";
 
 const AdminDashboard = () => {
     const [canWrite, setCanWrite] = useState(false);
@@ -172,33 +172,83 @@ const AdminDashboard = () => {
     
 
     return (
-        <div className="dashboard-container">
-            <h1 className="dashboard-title">Welcome to Admin Dashboard</h1>
+        // <>
+        // <div className="dashboard-container">
+        //     <h1 className="dashboard-title">Welcome to Admin Dashboard</h1>
 
-            <div className="toggle-container">
-                <span className="toggle-label">Can Write: {canWrite ? "ON" : "OFF"}</span>
-                <button className="start-bidding" onClick={startBidding} disabled={canWrite}>
-                    Start Bidding
-                </button>
-                {canWrite && <span className="timer"> Time Left: {timer}s </span>}
-            </div>
+        //     <div className="toggle-container">
+        //         <span className="toggle-label">Can Write: {canWrite ? "ON" : "OFF"}</span>
+        //         <button className="start-bidding" onClick={startBidding} disabled={canWrite}>
+        //             Start Bidding
+        //         </button>
+        //         {canWrite && <span className="timer"> Time Left: {timer}s </span>}
+        //     </div>
 
-            <ActiveUsers />
-            <FetchPs />
+        //     <ActiveUsers />
+        //     <FetchPs />
 
-            <div>
-                <UpdateHighestBid />
-                <h3>Highest Bid: {highestBid}</h3>
-                <h3>Name: {BidderName}</h3>
-            </div>
+        //     <div>
+        //         <UpdateHighestBid />
+        //         <h3>Highest Bid: {highestBid}</h3>
+        //         <h3>Name: {BidderName}</h3>
+        //     </div>
 
-            <button onClick={grantps}>Grant PS</button>
-            {granted && <p>{granted}</p>}
+        //     <button onClick={grantps}>Grant PS</button>
+        //     {granted && <p>{granted}</p>}
             
+        //     <button className="logout-button" onClick={handleLogOut}>
+        //         Logout
+        //     </button>
+        // </div>
+        // </>
+        <>
+        <div className="dashboard-wrapper">
+          <div className="admin-dashboard-container">
+            <h1 className="dashboard-title">Welcome to Admin Dashboard</h1>
+      
+            <div className="toggle-section">
+              <span className="toggle-label">Can Write: {canWrite ? "ON" : "OFF"}</span>
+              <button className="start-bidding-button" onClick={startBidding} disabled={canWrite}>
+                Start Bidding
+              </button>
+              {canWrite && <div className="timer-display">Time Left: {timer}s</div>}
+            </div>
+      
+            <div className="cards-section">
+              <div className="card">
+                <h2>Active Users</h2>
+                <ActiveUsers />
+              </div>
+      
+              <div className="card">
+                <h2>Fetch PS</h2>
+                <FetchPs />
+              </div>
+      
+              <div className="card">
+                <h2>Highest Bid</h2>
+                <p className="bid-value">Higest Bid: {highestBid}</p>
+                <p className="bidder-name">NAme:  {BidderName}</p>
+                <UpdateHighestBid />
+              </div>
+      
+              <div className="card">
+                <button className="grant-ps-button" onClick={grantps}>
+                  Grant PS
+                </button>
+                {granted && <p className="granted-message">{granted}</p>}
+              </div>
+            </div>
+      
             <button className="logout-button" onClick={handleLogOut}>
-                Logout
+              Logout
             </button>
+          </div>
         </div>
+      </>
+      
+
+       
     );
 };
 

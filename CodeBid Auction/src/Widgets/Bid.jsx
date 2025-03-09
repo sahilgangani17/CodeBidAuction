@@ -80,13 +80,16 @@ const BidPointsButton = () => {
 
     return (
         <>
-            <h3>Your Current Bid: {currentbid}</h3>
-            <h3>Total Bid Points Available: {totalbidpoints}</h3>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            <div  className = "blackbox">
+                <h3>Your Current Bid: {currentbid}</h3>
+                <h3>Total Bid Points Available: {totalbidpoints}</h3>
+                {error && <p style={{ color: "red" }}>{error}</p>}
+            </div>
+            
             <div>
-                <button onClick={() => updateBidPts(10)}>Bid +10 pts</button>
-                <button onClick={() => updateBidPts(20)}>Bid +20 pts</button>
-                <button onClick={() => updateBidPts(50)}>Bid +50 pts</button>
+                <button onClick={() => updateBidPts(10)} className = "blackbox">Bid +10 pts</button>
+                <button onClick={() => updateBidPts(20)} className = "blackbox">Bid +20 pts</button>
+                <button onClick={() => updateBidPts(50)} className = "blackbox">Bid +50 pts</button>
             </div>
         </>
     );

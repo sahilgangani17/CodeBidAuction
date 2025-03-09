@@ -1,21 +1,8 @@
-:root {
-  /* Color variables */
-  --primary-color: #ff6f61; /* Coral */
-  --primary-dark: #c55a4d; /* Dark Coral */
-  --secondary-color: #6a5acd; /* Slate Blue */
-  --text-color: #2c3e50; /* Darker Text */
-  --background-color: #f9f9f9; /* Light Background */
-  --error-color: #e74c3c; /* Error Red */
-
-  /* Font & sizing */
-  --font-family: "Poppins", sans-serif;
-  --container-max-width: 400px;
-}
 
 /* Apply background and center the form */
 body {
   font-family: var(--font-family);
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  /* background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,7 +70,7 @@ body {
   width: 100%;
   padding: 14px;
   margin-top: 12px;
-  background: var(--primary-color);
+
   color: white;
   border: none;
   border-radius: 8px;

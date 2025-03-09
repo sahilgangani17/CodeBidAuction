@@ -21,7 +21,7 @@ const FetchPsowned = () => {
     }, [username]); // Dependency added to update when username changes
 
     return (
-        <div>
+        <div className = "blackbox">
             <h3>Owned Problem Statements</h3>
             {ownedps.length > 0 ? (
                 <ul>

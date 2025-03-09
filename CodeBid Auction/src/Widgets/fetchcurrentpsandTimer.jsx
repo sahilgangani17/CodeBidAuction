@@ -44,25 +44,28 @@ const TimerAndPs = () => {
     }, []);
 
     return (
-        <div className="user-dashboard">
-            <h1>User Dashboard</h1>
+        <>
+            <div className="blackbox">
+                {/* <h1>User Dashboard</h1> */}
 
-            {currentPs ? (
-                <div className="problem-statement">
-                    <h3>Problem Statement</h3>
-                    <p><strong>PsNo:</strong> {currentPs.PsNo}</p>
-                    <p><strong>Title:</strong> {currentPs.Title}</p>
-                    <p><strong>Type:</strong> {currentPs.Type === "H" ? "High" : currentPs.Type === "M" ? "Medium" : "None"}</p>
-                    <p><strong>Base Points:</strong> {currentPs.BasePoints}</p>
-                </div>
-            ) : (
-                <p>Loading Problem Statement...</p>
-            )}
+                {currentPs ? (
+                    <div className="problem-statement">
+                        <h3>Problem Statement</h3>
+                        <p><strong>PsNo:</strong> {currentPs.PsNo}</p>
+                        <p><strong>Title:</strong> {currentPs.Title}</p>
+                        <p><strong>Type:</strong> {currentPs.Type === "H" ? "High" : currentPs.Type === "M" ? "Medium" : "None"}</p>
+                        <p><strong>Base Points:</strong> {currentPs.BasePoints}</p>
+                    </div>
+                ) : (
+                    <p>Loading Problem Statement...</p>
+                )}
 
-            <div className="timer">
+            </div>
+            <div className="blackbox">
                 <h2>Time Left: {timer}s</h2>
             </div>
-        </div>
+        </>
+        
     );
 };
 
