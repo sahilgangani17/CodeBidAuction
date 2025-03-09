@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "./firebaseconfig";
+import "../styles/Auction.css"
 
 const TimerAndPs = () => {
     const [currentPs, setCurrentPs] = useState(null);
