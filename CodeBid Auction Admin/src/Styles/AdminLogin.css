@@ -1,0 +1,219 @@
+/* Root variables for colors and fonts */
+:root {
+  /* Theme Colors */
+  --primary-color: #ff6f61; /* Coral */
+  --primary-dark: #c55a4d; /* Dark Coral */
+  --secondary-color: #6a5acd; /* Slate Blue */
+  --text-color: #2c3e50; /* Darker Text */
+  --background-color: #f9f9f9; /* Light Background */
+  --error-color: #e74c3c; /* Error Red */
+
+  /* Font & Sizing */
+  --font-family: "Poppins", sans-serif;
+  --container-max-width: 400px;
+}
+
+/* Body Styling */
+body {
+  font-family: var(--font-family);
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  transition: background 0.3s ease-in-out;
+}
+
+/* Auth & Dashboard Container */
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  background: var(--background-color);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.container:hover {
+  transform: scale(1.02);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Heading Style */
+.container h2,
+.container h1 {
+  margin-bottom: 20px;
+  color: var(--text-color);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* Input Fields */
+.input-wrapper {
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  margin: 12px 0;
+  padding: 4px;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+
+.input-wrapper:hover {
+  border-color: var(--primary-color);
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.input-wrapper input:focus {
+  box-shadow: 0 0 8px rgba(255, 111, 97, 0.3);
+  outline: none;
+}
+
+/* Buttons */
+.container button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+.container button:hover {
+  background: var(--primary-dark);
+  transform: scale(1.03);
+}
+
+.container button:active {
+  transform: scale(0.95);
+}
+
+/* Error Message */
+.container .error {
+  color: var(--error-color);
+  font-size: 0.875rem;
+  margin-bottom: 10px;
+}
+
+/* Toggle Switch */
+.toggle-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+/* Toggle Switch Styling */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.3s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+/* Logout Button */
+.logout-button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+  background: var(--error-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+.logout-button:hover {
+  background: darkred;
+  transform: scale(1.05);
+}
+
+.logout-button:active {
+  transform: scale(0.95);
+}
+
+/* Mobile Responsive Design */
+@media screen and (max-width: 600px) {
+  .container {
+    width: 90%;
+    padding: 25px;
+  }
+  .container h2,
+  .container h1 {
+    font-size: 1.8rem;
+  }
+  .container input {
+    font-size: 0.9rem;
+  }
+  .container button {
+    font-size: 1rem;
+  }
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

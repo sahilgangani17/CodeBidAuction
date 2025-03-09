@@ -47,7 +47,7 @@ const Auth = () => {
         await setDoc(doc(db, "users", username), {
           Username: username,
           TotalBidPoints: TotalBidPoints,
-          problemsetNo: [],
+          ProblemStatement: [ ],
         });
 
         await setDoc(doc(db, 'LiveAuction', username),{
@@ -69,7 +69,7 @@ const Auth = () => {
 
   return (
     <div className="auth-container">
-      <h2>{userexist ? "Login" : "Signup"}</h2>
+      <h2>Login</h2>
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleAuth}>
         <div className="input-wrapper">
@@ -81,7 +81,7 @@ const Auth = () => {
             required
           />
         </div>
-        <button type="submit">{userexist ? "Login" : "Signup"}</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );

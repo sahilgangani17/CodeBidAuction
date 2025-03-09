@@ -1,66 +1,51 @@
 import React, { useEffect, useState } from "react";
-import { getDoc, doc, updateDoc } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "./firebaseconfig";
 
 const BidPointsButton = () => {
-    const [currentbid, setcurrentbid] = useState(0);
-    const [totalbidpoints, settotalbidpoints] = useState(0);
+    const [currentbid, setCurrentBid] = useState(0);
+    const [totalbidpoints, setTotalBidPoints] = useState(0);
     const [error, setError] = useState("");
 
     const username = localStorage.getItem("Username");
 
     const CurrentBidDoc = doc(db, "LiveAuction", username);
-    const userdoc = doc(db, "users", username);
+    const userDoc = doc(db, "users", username);
+    const adminDoc = doc(db, "AdminDetails", "AdminLoginInfo");
 
     useEffect(() => {
-        const fetchtotalbidpoints = async () => {
-            try {
-                const getuserdocfield = await getDoc(userdoc);
-                if (getuserdocfield.exists()) {
-                    const total = parseInt(getuserdocfield.data()?.TotalBidPoints || 0);
-                    settotalbidpoints(total);
-                } else {
-                    console.error("No data exists");
-                }
-            } catch (error) {
-                console.error("Error fetching bid points:", error.message);
+        const unsubscribeUser = onSnapshot(userDoc, (docSnap) => {
+            if (docSnap.exists()) {
+                setTotalBidPoints(parseInt(docSnap.data()?.TotalBidPoints || 0));
             }
-        };
-        fetchtotalbidpoints();
-    }, [totalbidpoints]);
+        }, (error) => console.error("Error fetching bid points:", error.message));
 
-    useEffect(() => {
-        const fetchBid = async () => {
-            try {
-                const getdocfield = await getDoc(CurrentBidDoc);
-                if (getdocfield.exists()) {
-                    const currentPreviousbid = parseInt(getdocfield.data()?.currentBid || 0);
-                    setcurrentbid(currentPreviousbid);
-                } else {
-                    console.log("No bid data found.");
-                }
-            } catch (error) {
-                console.error("Error fetching bid:", error.message);
+        const unsubscribeBid = onSnapshot(CurrentBidDoc, (docSnap) => {
+            if (docSnap.exists()) {
+                setCurrentBid(parseInt(docSnap.data()?.currentBid || 0));
             }
+        }, (error) => console.error("Error fetching bid:", error.message));
+
+        return () => {
+            unsubscribeUser();
+            unsubscribeBid();
         };
-        fetchBid();
-    }, [currentbid]);
+    }, []);
 
     const updateBidPts = async (value) => {
         try {
-            var newbid = value + currentbid;
-
-            if (totalbidpoints <  newbid) {
+            const newBid = value + currentbid;
+            if (totalbidpoints < newBid) {
                 setError("Not enough bid points!");
                 return;
             }
 
-            await updateDoc(CurrentBidDoc, { currentBid: newbid });
-            // await updateDoc(userdoc, { bidpoints: totalbidpoints - value });
+            const adminDocSnapshot = await getDoc(adminDoc);
+            const canWrite = adminDocSnapshot.exists() ? adminDocSnapshot.data()?.canWrite : false;
 
-            setcurrentbid(newbid);
-            // settotalbidpoints(totalbidpoints - value);
-            // console.log(`Bid updated to ${newbid} points, remaining: ${totalbidpoints - value}`);
+            if (canWrite) {
+                await updateDoc(CurrentBidDoc, { currentBid: newBid });
+            }
         } catch (error) {
             console.error("Error updating bid:", error.message);
         }

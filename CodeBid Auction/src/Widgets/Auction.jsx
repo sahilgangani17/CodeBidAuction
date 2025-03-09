@@ -1,59 +1,49 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getDoc, doc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "./firebaseconfig";
 import { BidPointsButton } from "./Bid";
- 
+import TimerAndPs from "./fetchcurrentpsandTimer";
+
 const Auction = () => {
-
-  const [HigestBid, setHigestBid] = useState(0);
-
-  const HigestBidDoc = doc(db, "LiveAuction", "HigestBid");
+  const [highestBid, setHighestBid] = useState(0);
+  const [BidderName, setBidderName] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchBid = async () => {
-        try {
-            const getdocfield = await getDoc(HigestBidDoc);
-            if (getdocfield.exists()) {
-                const HigestBid = parseInt(getdocfield.data().HigestBid);
-                setHigestBid(HigestBid);
-            } else {
-                console.log("No bid data found.");
-            }
-        } 
-        catch (error) {
-            console.error("Error fetching bid:", error.message);
-        }
-      };
-    fetchBid();
-  }, []);
-  
+    const highestBidDoc = doc(db, "LiveAuction", "HigestBid");
 
-  const navigate = useNavigate();
-  
-  const handleLogOut = async () => {
-    try{
-      console.log("LoggedOut");
-      localStorage.removeItem('Username');
-      localStorage.removeItem('TotalBidPoints');
-      localStorage.removeItem('problemsetNo');
-      navigate("/");
-    }
-    catch(err){
-      console.error("Error logging out:", err.message);
-    }
+    // Real-time listener for highest bid updates
+    const unsubscribe = onSnapshot(highestBidDoc, (snapshot) => {
+      if (snapshot.exists()) {
+        setHighestBid(Number(snapshot.data().HigestBid) || 0);
+        setBidderName(String(snapshot.data().TeamName));
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup listener on unmount
+  }, []);
+
+  const handleLogOut = () => {
+    console.log("Logged Out");
+    localStorage.removeItem("Username");
+    localStorage.removeItem("TotalBidPoints");
+    localStorage.removeItem("problemsetNo");
+    navigate("/");
   };
 
   return (
     <>
       <h1>Welcome to the Auction Page!</h1>
-      <h2>Higgest Bid: {HigestBid}</h2>
-      <button onClick = { handleLogOut } className="logout_btn"> Logout </button>
-      <BidPointsButton></BidPointsButton>
+      <TimerAndPs />
+      <h2>Highest Bid: {highestBid}</h2>
+      <h2>Name: {BidderName}</h2>
+      <button onClick={handleLogOut} className="logout_btn">
+        Logout
+      </button>
+      <BidPointsButton />
     </>
-  )
-
+  );
 };
-
 
 export default Auction;
