@@ -39,3 +39,11 @@
 .user-card p strong {
     color: #222;
 }
+.reset-bid-button{
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 15px;
+}
+.reset-bid-container{
+    text-align: end;
+}

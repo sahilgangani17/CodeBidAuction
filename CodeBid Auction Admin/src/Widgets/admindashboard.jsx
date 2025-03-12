@@ -210,14 +210,19 @@ const AdminDashboard = () => {
             <h1 className="dashboard-title">Welcome to Admin Dashboard</h1>
       
             <div className="toggle-section">
-              <span className="toggle-label">Can Write: {canWrite ? "ON" : "OFF"}</span>
+              
+              <span className="toggle-label">Can Write: <div class="ON-OFF">{canWrite ? "ON" : "OFF"}</div></span>
+              
               <button className="start-bidding-button" onClick={startBidding} disabled={canWrite}>
                 Start Bidding
               </button>
-              {canWrite && <div className="timer-display">Time Left: {timer}s</div>}
+              
             </div>
+
+            {canWrite && <div className="timer-display">Time Left: {timer}s</div>}
       
             <div className="cards-section">
+              
               <div className="card">
                 <h2>Active Users</h2>
                 <ActiveUsers />
@@ -229,10 +234,17 @@ const AdminDashboard = () => {
               </div>
       
               <div className="card">
+                
                 <h2>Highest Bid</h2>
-                <p className="bid-value">Higest Bid: {highestBid}</p>
-                <p className="bidder-name">NAme:  {BidderName}</p>
+
+                <div className="flex-row">
+                
+                <p className="bidder-name">Name:  {BidderName}</p>
+
+                <p className="bid-value">Highest Bid: {highestBid}</p>
+                
                 <UpdateHighestBid />
+                </div>
               </div>
       
               <div className="card">
