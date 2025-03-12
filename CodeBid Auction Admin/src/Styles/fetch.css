@@ -1,35 +1,27 @@
-.toggle-section{
+.ps-select{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-.toggle-label {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;    
+.ps-dropdown{
+    font-size: 20px;
+}
+.ps-dropdown-label{
     font-size: 25px;
 }
-.start-bidding-button{
+.ps-dropdown-update{
     font-size: 20px;
     padding: 10px 20px;
     border-radius: 15px;
 }
-.timer-display{
+h3{
+    font-size: 30px;
+}
+p{
     font-size: 25px;
 }
 .flex-row{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-}
-.flex-row p{
-    font-size: 25px;
-}
-h2{
-    font-size: 30px;
-}
-.grant-ps-button{
-    font-size: 20px;
-    padding: 10px 20px;
-    border-radius: 15px;
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { collection, doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from "./firebaseconfig";
+import "../Styles/fetch.css";
 
 const FetchPs = () => {
     const [problemStatements, setProblemStatements] = useState([]);
@@ -76,26 +77,36 @@ const FetchPs = () => {
 
     return (
         <div>
-            <label htmlFor="psno">Select Ps No</label>
+            <div className="ps-select">
+
+            <label htmlFor="psno" className="ps-dropdown-label">Select Ps No</label>
+            
             <select 
                 name="psno" 
                 id="psno"
                 value={selectedPsNo}
                 onChange={(e) => setSelectedPsNo(e.target.value)} 
+                className="ps-dropdown"
             >
                 {problemStatements.map((ps, index) => (
                     <option key={index} value={ps.psno}>{ps.psno}</option>
                 ))}
             </select>
 
-            <button onClick={updateDetailsOfPs}>Update Ps Details</button>
+            <button onClick={updateDetailsOfPs} className="ps-dropdown-update">Update Ps Details</button>
 
+            </div>
             {currentPs && (
                 <div>
                     <h3>PsNo: {currentPs.PsNo}</h3>
+                    
                     <p>Title: {currentPs.Title}</p>
-                    <p>Type: {currentPs.Type === 'H' ? 'High' : currentPs.Type === 'M' ? 'Medium' : 'None'}</p>
+                    <div className='flex-row'>
                     <p>Base Points: {currentPs.BasePoints}</p>
+
+                    <p>Type: {currentPs.Type === 'H' ? 'Hard' : currentPs.Type === 'M' ? 'Medium' : 'None'}</p>
+                    </div>
+
                 </div>
             )}
         </div>
