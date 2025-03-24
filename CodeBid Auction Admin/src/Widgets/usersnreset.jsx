@@ -76,8 +76,9 @@ const ActiveUsers = () => {
 
     return (
         <>
+
             <div className="active-users-container">
-                <h3>Active Users</h3>
+                {/* <h3>Active Users</h3> */}
                 <div>
                     {userdata.map((user, index) => (
                         <div key={index} className="user-card">
@@ -88,7 +89,10 @@ const ActiveUsers = () => {
                     ))}
                 </div>
             </div>
-                <button onClick={resetbid}>Reset Bid</button>
+            <div className='reset-bid-container'>
+            <button onClick={resetbid} className='reset-bid-button'>Reset Bid</button>
+            </div>
+                
         </>
     );
 };
