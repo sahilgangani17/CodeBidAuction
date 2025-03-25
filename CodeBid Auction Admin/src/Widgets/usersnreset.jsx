@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { collection, doc, onSnapshot, updateDoc, getDocs } from 'firebase/firestore';
+import { collection, doc, onSnapshot, updateDoc, getDocs, Timestamp } from 'firebase/firestore';
 import { db } from './firebaseconfig';
 import "../Styles/activeuser.css";
 
@@ -57,13 +57,23 @@ const ActiveUsers = () => {
             const username = docSnap.id;
 
             // Skip the document if it's "HigestBid" (typo? Should it be "HighestBid"?)
-            if (username === "HigestBid") return;
-
+            
             const userDocRef = doc(db, 'LiveAuction', username);
+            if (username === "HigestBid"){
+                await updateDoc(userDocRef,{
+                    HigestBid : 0,
+                    TeamName : "",
+                    timestamp: Date.now()
+                }
 
-            await updateDoc(userDocRef, {
-                currentBid: 0,
-            });
+                )
+            }
+            else {
+                await updateDoc(userDocRef, {
+                    currentBid: 0,
+                });
+            }
+           
         });
 
         await Promise.all(resetPromises);
