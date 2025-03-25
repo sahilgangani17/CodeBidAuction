@@ -14,6 +14,8 @@ const BidPointsButton = () => {
     const userDoc = doc(db, "users", username);
     const adminDoc = doc(db, "AdminDetails", "AdminLoginInfo");
     const currentPsDoc = doc(db, "AdminDetails", "CurrentPs");
+    const highestBidDoc = doc(db, "LiveAuction", "HigestBid");
+
 
     useEffect(() => {
         // Fetch BasePoints initially
@@ -51,11 +53,24 @@ const BidPointsButton = () => {
             }
         }, (error) => console.error("Error fetching bid:", error.message));
 
+
+        // Realtime listener for highest bid
+        const unsubscribeHighestBid = onSnapshot(highestBidDoc, (docSnap) => {
+            if (docSnap.exists()) {
+                const highestBid = parseInt(docSnap.data()?.HigestBid || 0);
+                if (highestBid === 0) {
+                    // Reset current bid to basePoints
+                    setCurrentBid(basePoints);
+                }
+            }
+        }, (error) => console.error("Error fetching highest bid:", error.message));
+
         return () => {
             unsubscribeUser();
             unsubscribeBid();
+            unsubscribeHighestBid();
         };
-    }, []);
+    }, [basePoints]);
 
     const updateBidPts = async (value) => {
         try {
@@ -89,7 +104,7 @@ const BidPointsButton = () => {
             <div>
                 <button onClick={() => updateBidPts(10)} className = "blackbox">Bid +10 pts</button>
                 <button onClick={() => updateBidPts(20)} className = "blackbox">Bid +20 pts</button>
-                <button onClick={() => updateBidPts(50)} className = "blackbox">Bid +50 pts</button>
+                {/* <button onClick={() => updateBidPts(50)} className = "blackbox">Bid +50 pts</button> */}
             </div>
         </>
     );
